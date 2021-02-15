@@ -12,9 +12,9 @@ namespace UI.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ApiAcces _access;
+        private readonly LocationAccess _access;
 
-        public HomeController(ILogger<HomeController> logger, ApiAcces access)
+        public HomeController(ILogger<HomeController> logger, LocationAccess access)
         {
             _logger = logger;
             _access = access;
@@ -22,7 +22,6 @@ namespace UI.Controllers
 
         public async Task<IActionResult> Index()
         {
-            await _access.RegionesGetAll();
             return View();
         }
 

@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 
 namespace UI.Models
 {
-    public class CountryModel
+    public class TemperatureModel
     {
-        public string ID { get; set; }
-        public string EnglishName { get; set; }
-        
-        
+        public int Value { get; set; }
+        public string Unit { get; set; }
+
     }
 }

@@ -12,6 +12,5 @@ namespace UI.Models
     {
         public string ID { get; set; }
         public string EnglishName { get; set; }
-        public List<CountryModel> Paises { get; set; } = new List<CountryModel>();
     }
 }
