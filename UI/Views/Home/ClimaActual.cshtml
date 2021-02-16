@@ -1,0 +1,41 @@
+﻿@model UI.Models.CurrentConditionsModel
+
+@{
+    ViewData["Title"] = "ClimaActual";
+}
+
+<h1>ClimaActual</h1>
+
+<div>
+    <h4>CurrentConditionsModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LocalObservationDateTime)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LocalObservationDateTime)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.WeatherText)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.WeatherText)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.HasPrecipitation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.HasPrecipitation)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PrecipitationType)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PrecipitationType)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

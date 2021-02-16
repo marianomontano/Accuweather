@@ -3,6 +3,91 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Accuwheather</h1>
+    <p>Aplicando Uso de Accuwheather API</p>
+
+    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+    {
+        <div class="form-group">
+                <label class="col-form-label">Seleccione una región</label>
+                @Html.DropDownList("regiones", ViewBag.Regiones as SelectList, htmlAttributes: new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label class="col-form-label">Seleccione un país</label>
+            @Html.DropDownList("paises", new List<SelectListItem>(), htmlAttributes: new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label class="col-form-label">Seleccione una ciudad</label>
+            @Html.DropDownList("ciudades", new List<SelectListItem>(), htmlAttributes: new { @class = "form-control" })
+        </div>
+
+        <input type="button" class="btn btn-success" value="Solicitar Condiciones Climáticas" />
+    }
+
 </div>
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#regiones").change(function () {
+                var jsRegionId = $("#regiones option:selected").val();
+                $.ajax({
+                    type: "GET",
+                    data: { regionID: jsRegionId },
+                    url: "@Url.Action("FiltrarPaises", "Home")",
+                    success: function (result) {
+                        alert(result);
+                        //var opt = "<option value=-1>-- seleccione un pais --</option>";
+                        //for (var i = 0; i < result.length; i++) {
+                        //    opt += "option value='" + result[i].ID + "'>" + result[i].EnglishName + "</option>";
+                        //}
+                        //$("#paises").html(opt);
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#paises").change(function () {
+                var jsPaisId = $("#paises option:selected").val();
+                $.ajax({
+                    type: "GET",
+                    data: { paisID: jsPaisId },
+                    url: "@Url.Action("FiltrarCiudades", "Home")",
+                    success: function (result) {
+                        alert(result);
+                    //    var opt = "<option value=-1>-- seleccione un pais --</option>";
+                    //    for (var i = 0; i < result.length; i++) {
+                    //        opt += "option value='" + result[i].ID + "'>" + result[i].EnglishName + "</option>";
+                    //    }
+                    //    $("#ciudades").html(opt);
+                    }
+                });
+            });
+        });
+    </script>
+    @*<script>
+            $(document).ready(function () {
+                $("#regiones").change(function () {
+                    $("#paises").empty();
+                    $.ajax({
+                        type: "POST",
+                        url: "/Home/FiltrarPaises",
+                        data: { paisesId: $("#regiones").val() },
+                        dataType: "json",
+                        success: function (paises) {
+                            $.each(paises, function (index, row) {
+                                $("#paises").append("<option></option>").val(row.ID).html(row.EnglishName);
+                            });
+                        },
+                        error: function (ex) {
+                            alert("Failed:" + ex);
+                        }
+                    });
+                });
+            });
+        </script>*@
+
+}

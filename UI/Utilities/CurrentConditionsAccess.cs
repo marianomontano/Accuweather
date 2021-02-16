@@ -22,7 +22,7 @@ namespace UI.Utilities
             Url = _configuration["Private:Url"];
         }
 
-        public async Task<List<CurrentConditionsModel>> CondicionesActuales(string cityKey)
+        public async Task<CurrentConditionsModel> CondicionesActuales(int cityKey)
         {
             Cliente = new HttpClient();
 
@@ -30,9 +30,9 @@ namespace UI.Utilities
             {
                 if (response.IsSuccessStatusCode)
                 {
-                    string regionesJson = await response.Content.ReadAsStringAsync();
-                    var regiones = JsonConvert.DeserializeObject<List<CurrentConditionsModel>>(regionesJson);
-                    return regiones;
+                    string condicionesJson = await response.Content.ReadAsStringAsync();
+                    var condicionesActuales = JsonConvert.DeserializeObject<CurrentConditionsModel>(condicionesJson);
+                    return condicionesActuales;
                 }
                 else
                 {
