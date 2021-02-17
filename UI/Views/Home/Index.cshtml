@@ -37,12 +37,11 @@
                     data: { regionID: jsRegionId },
                     url: "@Url.Action("FiltrarPaises", "Home")",
                     success: function (result) {
-                        alert(result);
-                        //var opt = "<option value=-1>-- seleccione un pais --</option>";
-                        //for (var i = 0; i < result.length; i++) {
-                        //    opt += "option value='" + result[i].ID + "'>" + result[i].EnglishName + "</option>";
-                        //}
-                        //$("#paises").html(opt);
+                        var opt = "<option value='-1'>-- seleccione un pais --</option>";
+                        for (var i = 0; i < result.length; i++) {
+                            opt += "<option value='" + result[i].id + "'>" + result[i].name + "</option>";
+                        }
+                        $("#paises").html(opt);
                     }
                 });
             });
@@ -57,12 +56,11 @@
                     data: { paisID: jsPaisId },
                     url: "@Url.Action("FiltrarCiudades", "Home")",
                     success: function (result) {
-                        alert(result);
-                    //    var opt = "<option value=-1>-- seleccione un pais --</option>";
-                    //    for (var i = 0; i < result.length; i++) {
-                    //        opt += "option value='" + result[i].ID + "'>" + result[i].EnglishName + "</option>";
-                    //    }
-                    //    $("#ciudades").html(opt);
+                        var opt = "<option value='-1'>-- seleccione un pais --</option>";
+                        for (var i = 0; i < result.length; i++) {
+                            opt += "<option value='" + result[i].id + "'>" + result[i].name + "</option>";
+                        }
+                        $("#ciudades").html(opt);
                     }
                 });
             });

@@ -22,29 +22,19 @@ namespace UI.Controllers
             _logger = logger;
             _locationAccess = locationAccess;
             _conditionsAccess = conditionsAccess;
+
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             var regiones = new List<SelectListItem>();
-
-            //_access.RegionesGetAll().Result.ForEach(x =>
-            //{
-            //    regiones.Add(new SelectListItem(x.EnglishName, x.ID));
-            //});
-
+            _locationAccess.RegionesGetAll().Result.ForEach(x =>
+            {
+                regiones.Add(new SelectListItem(x.EnglishName, x.ID));
+            });
             ViewBag.Regiones = regiones;
             return View();
-        }
-
-        [HttpPost]
-        [Route("Home/ClimaActual")]
-        public async Task<IActionResult> Index(int cityKey)
-        {
-            var climaActual = await _conditionsAccess.CondicionesActuales(cityKey);
-
-            return View("ClimaActual", climaActual);
         }
 
         public IActionResult Privacy()
@@ -58,18 +48,24 @@ namespace UI.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public JsonResult FiltrarPaises(string regionID)
+        public IActionResult FiltrarPaises(string regionID)
         {
             var paises = _locationAccess.PaisesGetByRegion(regionID);
 
-            return Json(paises.Result);
+            return Json(paises.Result.Select(p => new { 
+                id = p.ID,
+                name = p.EnglishName
+            }).ToList());   
         }
 
         public JsonResult FiltrarCiudades(string paisID)
         {
             var ciudades = _locationAccess.CiudadesGetByPais(paisID);
 
-            return Json(ciudades.Result);
+            return Json(ciudades.Result.Select(p => new { 
+                key = p.Key,
+                name = p.EnglishName
+            }).ToList());
         }
     }
 }
