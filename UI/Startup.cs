@@ -27,6 +27,7 @@ namespace UI
             services.AddRazorPages();
             services.AddTransient<LocationAccess>();
             services.AddTransient<CurrentConditionsAccess>();
+            services.AddSingleton<APIHelper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

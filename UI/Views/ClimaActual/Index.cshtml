@@ -1,13 +1,13 @@
 ﻿@model UI.Models.CurrentConditionsModel
 
 @{
-    ViewData["Title"] = "ClimaActual";
+    ViewData["Title"] = "Condiciones Actuales";
 }
 
-<h1>ClimaActual</h1>
+<h1>Index</h1>
 
 <div>
-    <h4>CurrentConditionsModel</h4>
+    <h4>Condiciones climáticas actuales de @ViewBag.Ciudad</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -37,5 +37,5 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Index">Back to List</a>
+    @Html.ActionLink("Buscar Nuevo", "Index", "Home")
 </div>

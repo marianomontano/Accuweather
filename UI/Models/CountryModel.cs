@@ -14,6 +14,6 @@ namespace UI.Models
 
         public string EnglishName { get; set; }
         
-        
+        public string RegionID { get; set; }
     }
 }

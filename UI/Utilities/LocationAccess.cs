@@ -8,33 +8,32 @@ using System.Text;
 using UI.Models;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
+using UI.Utilities;
+using UI.Repositories;
 
 namespace UI
 {
     public class LocationAccess
     {
-        public HttpClient Cliente { get; set; }
-        private  static string Url;
+        private HttpClient _cliente;
         private static string ApiKey;
-        private IConfiguration _configuration;
-        public LocationAccess(IConfiguration configuration)
+        public LocationAccess(IConfiguration configuration, APIHelper apiHelper)
         {
-            _configuration = configuration;
-            ApiKey = _configuration["Private:ApiKey"];
-            Url = _configuration["Private:Url"];
+            ApiKey = configuration["Private:ApiKey"];
+            apiHelper.InicializarCliente();
+            _cliente = apiHelper.Cliente;
         }
 
-        public async Task<List<RegionModel>> RegionesGetAll()
+        public async Task RegionesGetAll()
         {
-            Cliente = new HttpClient();
-
-            using (var response = await Cliente.GetAsync(Url + $"locations/v1/regions?apikey={ApiKey}"))
+            
+            using (var response = await _cliente.GetAsync($"locations/v1/regions?apikey={ApiKey}"))
             {
                 if (response.IsSuccessStatusCode)
                 {
                     string regionesJson = await response.Content.ReadAsStringAsync();
                     var regiones = JsonConvert.DeserializeObject<List<RegionModel>>(regionesJson);
-                    return regiones;
+                    RegionRepository.Agregar(regiones);
                 }
                 else
                 {
@@ -43,17 +42,16 @@ namespace UI
             }
         }
 
-        public async Task<List<CountryModel>> PaisesGetByRegion(string region)
+        public async Task PaisesGetByRegion(string region)
         {
-            Cliente = new HttpClient();
 
-            using (var response = await Cliente.GetAsync(Url + $"locations/v1/countries/{region}?apikey={ApiKey}"))
+            using (var response = await _cliente.GetAsync($"locations/v1/countries/{region}?apikey={ApiKey}"))
             {
                 if (response.IsSuccessStatusCode)
                 {
                     string paisesJson = await response.Content.ReadAsStringAsync();
                     var paises = JsonConvert.DeserializeObject<List<CountryModel>>(paisesJson);
-                    return paises;
+                    CountriesRepository.Agregar(paises, region);
                 }
                 else
                 {
@@ -62,17 +60,15 @@ namespace UI
             }
         }
 
-        public async Task<List<CityModel>> CiudadesGetByPais(string pais)
+        public async Task CiudadesGetByPais(string pais)
         {
-            Cliente = new HttpClient();
-
-            using (var response = await Cliente.GetAsync(Url + $"locations/v1/cities/{pais}?apikey={ApiKey}"))
+            using (var response = await _cliente.GetAsync($"locations/v1/cities/{pais}?apikey={ApiKey}"))
             {
                 if (response.IsSuccessStatusCode)
                 {
                     string ciudadesJson = await response.Content.ReadAsStringAsync();
                     var ciudades = JsonConvert.DeserializeObject<List<CityModel>>(ciudadesJson);
-                    return ciudades;
+                    CitiesRepository.Agregar(ciudades);
                 }
                 else
                 {
@@ -83,9 +79,7 @@ namespace UI
 
         public async Task<CityModel> CiudadGetByNombre(string nombre)
         {
-            Cliente = new HttpClient();
-
-            using (var response = await Cliente.GetAsync(Url + $"locations/v1/cities/search?q={nombre}&apikey={ApiKey}"))
+            using (var response = await _cliente.GetAsync($"locations/v1/cities/search?q={nombre}&apikey={ApiKey}"))
             {
                 if (response.IsSuccessStatusCode)
                 {

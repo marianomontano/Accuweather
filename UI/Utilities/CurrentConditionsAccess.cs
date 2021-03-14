@@ -11,28 +11,24 @@ namespace UI.Utilities
 {
     public class CurrentConditionsAccess
     {
-        public HttpClient Cliente { get; set; }
-        private static string Url;
+        public static HttpClient Cliente;
         private static string ApiKey;
-        private IConfiguration _configuration;
-        public CurrentConditionsAccess(IConfiguration configuration)
+        public CurrentConditionsAccess(IConfiguration configuration, APIHelper  apiHelper)
         {
-            _configuration = configuration;
-            ApiKey = _configuration["Private:ApiKey"];
-            Url = _configuration["Private:Url"];
+            ApiKey = configuration["Private:ApiKey"];
+            apiHelper.InicializarCliente();
+            Cliente = apiHelper.Cliente;
         }
 
-        public async Task<CurrentConditionsModel> CondicionesActuales(int cityKey)
+        public async Task<CurrentConditionsModel> ClimaPorCiudad(int cityKey)
         {
-            Cliente = new HttpClient();
-
-            using (var response = await Cliente.GetAsync(Url + $"currentconditions/v1/{cityKey}?apikey={ApiKey}"))
+            using (var response = await Cliente.GetAsync($"currentconditions/v1/{cityKey}?apikey={ApiKey}&lang=es-es"))
             {
                 if (response.IsSuccessStatusCode)
                 {
                     string condicionesJson = await response.Content.ReadAsStringAsync();
-                    var condicionesActuales = JsonConvert.DeserializeObject<CurrentConditionsModel>(condicionesJson);
-                    return condicionesActuales;
+                    var condicionesActuales = JsonConvert.DeserializeObject<List<CurrentConditionsModel>>(condicionesJson);
+                    return condicionesActuales[0];
                 }
                 else
                 {

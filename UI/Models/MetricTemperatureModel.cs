@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace UI.Models
 {
-    public class TemperatureModel
+    public class MetricTemperatureModel
     {
-        MetricTemperatureModel Metric { get; set; }
-
+        public double Value { get; set; }
+        public string Unit { get; set; }
     }
 }
