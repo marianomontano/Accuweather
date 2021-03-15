@@ -17,15 +17,15 @@ namespace UI.Repositories
         }
 
 
-        public static async Task Agregar(List<CountryModel> countryModels, string region)
+        public static void Agregar(List<CountryModel> countryModels, string region)
         {
-            foreach(var pais in countryModels)
+            countryModels.ForEach(pais => 
             {
                 pais.RegionID = region;
 
                 if (!Paises.Contains(pais))
                     Paises.Add(pais);
-            }
+            });
         }
     }
 }

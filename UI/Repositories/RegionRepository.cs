@@ -8,23 +8,15 @@ namespace UI.Repositories
 {
     public class RegionRepository
     {
-        private static LocationAccess _locationAccess;
         public static List<RegionModel> Regiones { get; } = new List<RegionModel>();
 
-        public RegionRepository(LocationAccess locationAccess)
+        public static void Agregar(List<RegionModel> regionModels)
         {
-            _locationAccess = locationAccess;
-        }
-
-        public static async Task Agregar(List<RegionModel> regionModels)
-        {
-            foreach(var region in regionModels)
+            regionModels.ForEach(region => 
             {
                 if (!Regiones.Contains(region))
                     Regiones.Add(region);
-
-                await _locationAccess.PaisesGetByRegion(region.ID);
-            }
+            });
         }
     }
 }

@@ -27,8 +27,8 @@ namespace UI
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddSingleton<APIHelper>();
-            services.AddSingleton<LocationAccess>();
-            services.AddSingleton<CurrentConditionsAccess>();
+            services.AddTransient<LocationAccess>();
+            services.AddTransient<CurrentConditionsAccess>();
             services.AddScoped<RegionRepository>();
             services.AddScoped<CountriesRepository>();
             services.AddScoped<CitiesRepository>();
