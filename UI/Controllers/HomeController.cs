@@ -28,6 +28,7 @@ namespace UI.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            //RegionRepository.Regiones.Add(new RegionModel { ID = "SAM", EnglishName = "South America" });
             if(RegionRepository.Regiones.Count < 1)
             {
                 await _locationAccess.RegionesGetAll();

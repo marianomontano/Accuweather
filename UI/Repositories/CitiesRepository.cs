@@ -6,7 +6,7 @@ using UI.Models;
 
 namespace UI.Repositories
 {
-    public static class CitiesRepository
+    public class CitiesRepository
     {
         public static List<CityModel> Ciudades { get; } = new List<CityModel>();
 

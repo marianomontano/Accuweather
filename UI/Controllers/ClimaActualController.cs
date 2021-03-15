@@ -21,9 +21,10 @@ namespace UI.Controllers
         // GET: ClimaActual
         public ActionResult Index(int ciudades)
         {
-            if (ciudades != -1)
+            if (ciudades < 1)
             {
                 var condiciones = _condicionesActuales.ClimaPorCiudad(ciudades).Result; 
+
                 return View(condiciones);
             }
             else
@@ -32,73 +33,64 @@ namespace UI.Controllers
             }
         }
 
-        // GET: ClimaActual/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+        /*
+        var condiciones =   new CurrentConditionsModel
+                {
+                    LocalObservationDateTime = DateTime.Now,
+                    WeatherText = "Sunny",
+                    HasPrecipitation = false,
+                    PrecipitationSummary = new PrecipitationSummaryModel
+                    {
+                        PastHour = new MetricModel
+                        {
+                            Unit = "mm3",
+                            Value = 0
+                        },
+                        Past12Hours = new MetricModel
+                        {
+                            Unit = "mm3",
+                            Value = 0
+                        },
+                        Past24Hours = new MetricModel
+                        {
+                            Unit = "mm3",
+                            Value = 0   
+                        }
+                    },
+                    PrecipitationType = null,
+                    Temperature = new TemperatureModel
+                    {
+                        Metric = new MetricModel
+                        {
+                            Unit = "C",
+                            Value = 27.3
+                        }
+                    },
+                    RealFeelTemperature = new TemperatureModel
+                    {
+                        Metric = new MetricModel
+                        {
+                            Unit = "C",
+                            Value = 27.4
+                        }
+                    },
+                    Wind = new WindModel
+                    {
+                        Direction = new DirectionModel
+                        {
+                            English = "South East"
+                        }
+                    },
+                    Pressure = new PressureModel
+                    {
+                        Metric = new MetricModel
+                        {
+                            Unit = "mb",
+                            Value = 1008.0
+                        }
+                    }
+                };
+         */
 
-        // GET: ClimaActual/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: ClimaActual/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ClimaActual/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: ClimaActual/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ClimaActual/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: ClimaActual/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

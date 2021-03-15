@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UI.Repositories;
 using UI.Utilities;
 
 namespace UI
@@ -25,9 +26,12 @@ namespace UI
         {
             services.AddControllersWithViews();
             services.AddRazorPages();
-            services.AddTransient<LocationAccess>();
-            services.AddTransient<CurrentConditionsAccess>();
             services.AddSingleton<APIHelper>();
+            services.AddSingleton<LocationAccess>();
+            services.AddSingleton<CurrentConditionsAccess>();
+            services.AddScoped<RegionRepository>();
+            services.AddScoped<CountriesRepository>();
+            services.AddScoped<CitiesRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

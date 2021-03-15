@@ -4,37 +4,71 @@
     ViewData["Title"] = "Condiciones Actuales";
 }
 
-<h1>Index</h1>
+<h1>Clima actual</h1>
 
 <div>
-    <h4>Condiciones climáticas actuales de @ViewBag.Ciudad</h4>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LocalObservationDateTime)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LocalObservationDateTime)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.WeatherText)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.WeatherText)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.HasPrecipitation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.HasPrecipitation)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PrecipitationType)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PrecipitationType)
-        </dd>
-    </dl>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 text-center"><h5>Fecha de información: @Model.LocalObservationDateTime</h5></div>
+            <br />
+            <div class="col-sm-4 border-dark bg-light">
+                <h6>@Html.DisplayNameFor(model => model.WeatherText)</h6>
+                @Model.WeatherText
+            </div>
+            <div class="col-sm-4 border-dark bg-light">
+                <h6>@Html.DisplayNameFor(model => model.Temperature)</h6>
+                @Model.Temperature.Metric.Value @Model.Temperature.Metric.Unit
+            </div>
+            <div class="col-sm-4 border-dark bg-light">
+                <h6>@Html.DisplayNameFor(model => model.RealFeelTemperature)</h6>
+                @Model.RealFeelTemperature.Metric.Value @Model.RealFeelTemperature.Metric.Unit
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 text-center"><h5>Precipitación: </h5></div>
+            <br />
+            <div class="col-sm-3 border-dark bg-light">
+                <h6>@Html.DisplayNameFor(model => model.HasPrecipitation)</h6>
+                @if (Model.HasPrecipitation == true)
+                {
+                    <p>Sí</p>
+                    @Model.PrecipitationType
+                }
+                else
+                {
+                    <p>No</p>
+                }
+            </div>
+            <div class="col-sm-3 border-dark bg-light">
+                <h6>@Html.DisplayNameFor(model => model.PrecipitationSummary.PastHour)</h6>
+                @Model.PrecipitationSummary.PastHour.Value @Model.PrecipitationSummary.PastHour.Unit
+            </div>
+            <div class="col-sm-3 border-dark bg-light">
+                <h6>@Html.DisplayNameFor(model => model.PrecipitationSummary.Past12Hours)</h6>
+                @Model.PrecipitationSummary.Past12Hours.Value @Model.PrecipitationSummary.Past12Hours.Unit
+            </div>
+            <div class="col-sm-3 border-dark bg-light">
+                <h6>@Html.DisplayNameFor(model => model.PrecipitationSummary.Past24Hours)</h6>
+                @Model.PrecipitationSummary.Past24Hours.Value @Model.PrecipitationSummary.Past24Hours.Unit
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 text-center"><h5>Otros datos:</h5></div>
+            <br />
+            <div class="col-sm-3 border-dark bg-light">
+                <h6>@Html.DisplayNameFor(model => model.Wind)</h6>
+                Dirección: @Model.Wind.Direction.English
+                Velocidad: @Model.Wind.Speed
+            </div>
+            <div class="col-sm-6 border-dark bg-light">
+                <h6>@Html.DisplayNameFor(model => model.Pressure)</h6>
+                @Model.Pressure.Metric.Value @Model.Pressure.Metric.Unit
+            </div>
+        </div>
+    </div>
 </div>
 <div>
     @Html.ActionLink("Buscar Nuevo", "Index", "Home")

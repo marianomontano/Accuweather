@@ -7,7 +7,7 @@ namespace UI.Models
 {
     public class TemperatureModel
     {
-        MetricTemperatureModel Metric { get; set; }
+        public MetricModel Metric { get; set; }
 
     }
 }

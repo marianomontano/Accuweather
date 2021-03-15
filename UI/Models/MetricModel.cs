@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace UI.Models
 {
-    public class MetricTemperatureModel
+    public class MetricModel
     {
         public double Value { get; set; }
         public string Unit { get; set; }
