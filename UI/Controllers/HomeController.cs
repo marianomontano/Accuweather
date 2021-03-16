@@ -53,7 +53,7 @@ namespace UI.Controllers
                 await _locationAccess.PaisesGetByRegion(regionID);
             }
 
-            var paises = CountriesRepository.Paises.Where(x => x.ID == regionID);
+            var paises = CountriesRepository.Paises.Where(x => x.RegionID == regionID);
 
             return Json(paises.Select(p => new
             {
@@ -64,17 +64,32 @@ namespace UI.Controllers
 
         public async Task<IActionResult> FiltrarCiudadesAsync(string paisID)
         {
-            if(CitiesRepository.Ciudades.Any(x => x.CountryID == paisID) == false)
+            if(CitiesRepository.Ciudades.Any(x => x.Country.ID == paisID) == false)
             {
                 await _locationAccess.CiudadesGetByPais(paisID);
             }
 
-            var ciudades = CitiesRepository.Ciudades.Where(x => x.CountryID == paisID);
+            var ciudades = CitiesRepository.Ciudades
+                .Where(x => x.Country.ID == paisID)
+                .Select(c => new CityModel
+                {
+                    Key = c.Key,
+                    EnglishName = c.EnglishName,
+                    Country = CountriesRepository.Paises
+                    .Where(x => x.ID == paisID)
+                    .Select(p => new CountryModel
+                    {
+                        ID = p.ID,
+                        EnglishName = p.EnglishName,
+                        RegionID = p.RegionID
+                    })
+                    .SingleOrDefault()
+                });
 
-            return Json(ciudades.Select(p => new
+            return Json(ciudades.Select(s => new
             {
-                key = p.Key,
-                name = p.EnglishName
+                key = s.Key,
+                name = s.EnglishName
             }).ToList());
         }
 

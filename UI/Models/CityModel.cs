@@ -9,6 +9,6 @@ namespace UI.Models
     {
         public int Key { get; set; }
         public string EnglishName { get; set; }
-        public string CountryID { get; set; }
+        public CountryModel Country { get; set; }
     }
 }

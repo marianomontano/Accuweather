@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UI.Models;
+using UI.Repositories;
 using UI.Utilities;
 
 namespace UI.Controllers
@@ -21,8 +22,9 @@ namespace UI.Controllers
         // GET: ClimaActual
         public ActionResult Index(int ciudades)
         {
-            if (ciudades < 1)
+            if (ciudades > 0)
             {
+                ViewBag.Ciudad = CitiesRepository.Ciudades.Where(x => x.Key == ciudades).Select(c => c.EnglishName).ToString();
                 var condiciones = _condicionesActuales.ClimaPorCiudad(ciudades).Result; 
 
                 return View(condiciones);
